@@ -1,0 +1,67 @@
+; Milestone 3, clean path: disarm all three live sockets, sign off without a Miss, leave.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_test
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+
+run 30
+run 25 right                    ; bottom floor socket (col 10)
+expect pl_x 8
+run 5
+run 1 fire
+until pl_state 0 - 200          ; the vignette
+expect *room_hazards+4 1
+
+run 300 right
+run 5 left
+expect pl_x 28
+run 60 up
+expect pl_y 13
+run 15 left                     ; middle floor socket (col 24)
+expect pl_x 25
+run 5
+run 1 fire
+until pl_state 0 - 200          ; the vignette
+expect *room_hazards+8 1
+
+run 200 left
+run 35 right
+expect pl_x 8
+run 60 up
+expect pl_y 6
+run 55 right                    ; top floor socket (col 20)
+expect pl_x 19
+run 5
+run 1 fire
+until pl_state 0 - 200          ; the vignette
+expect *room_hazards+12 1
+expect energy 16                ; traps cost time, not energy
+
+run 1 mark                      ; nothing armed left: clean sign-off
+run 3
+expect bld_marked 1
+expect miss_tally 0
+expect energy 16
+run 20
+shot sw_signed_off
+
+run 55 left                     ; back down to the exit
+expect pl_x 8
+run 60 down
+expect pl_y 13
+run 100 right
+expect pl_x 28
+run 60 down
+expect pl_y 20
+run 10 left
+expect pl_x 26
+run 5
+run 1 up
+run 3
+expect pl_state 2
+run 20
+shot sw_exit_done

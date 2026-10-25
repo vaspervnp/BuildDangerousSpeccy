@@ -1,0 +1,59 @@
+; Pause from the joystick (input.asm): both fire buttons together toggle it, like ESC.
+; One fire alone waits a few frames for the other, then counts as Fire / M as before
+; (or as it is let go, for a quick tap); after both, nothing until both are up.
+; Sunny Vale's lobby, in front of the socket at 8,20: Fire there would set it off.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+poke workers_enabled 0            ; no workers (tests/workers.txt)
+poke blackouts_enabled 0
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+run 1
+goto 0 6 20 right
+run 2
+expect paused 0
+shot joypause_before
+
+; --- both at once: paused, and neither Fire nor M
+run 3 jfire1+jfire2
+expect paused 1
+shot joypause
+run 20 jfire1                   ; fire 2 let go first: fire 1 still held does nothing
+run 5
+expect paused 1
+expect pl_state 0
+expect bld_signed 0
+run 3 jfire1+jfire2             ; both again: carry on
+expect paused 0
+run 5
+shot joypause_after
+expect pl_state 0
+expect bld_signed 0
+
+; --- one a moment before the other still counts as both
+run 3 jfire2
+run 3 jfire1+jfire2
+expect paused 1
+run 5
+run 1 esc                       ; ESC carries on too
+run 2
+expect paused 0
+expect bld_signed 0
+
+; --- fire 1 alone: Fire, a little later
+run 2 jfire1
+expect pl_state 0
+run 6 jfire1
+expect pl_state 1               ; the trap goes off
+until pl_state 0 - 300
+
+; --- a quick tap of fire 2: M, as it is let go
+run 2 jfire2
+expect bld_signed 0
+run 2
+expect bld_signed 1

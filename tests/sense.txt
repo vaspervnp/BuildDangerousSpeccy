@@ -1,0 +1,51 @@
+; The sixth sense (sense.asm): with an armed trap within reach, a "?" over Thanos's head,
+; blinking white/orange; gone when he walks away, sets the trap off or jumps.
+; Sunny Vale's lobby socket at 8,20 (with the first hint window too), then the east
+; wing's ferret grille at 16,21, after the hints have run out: only the "?".
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+poke workers_enabled 0            ; no workers (tests/workers.txt)
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+run 1
+expect sense_on 0
+
+; --- the first trap: the "?" and the hint window
+goto 0 6 20 right
+run 2
+expect sense_on 1
+expect hint_row 2
+shot sense_first
+run 8                           ; blinks: orange
+shot sense_blink
+goto 0 3 20 left                ; walk away: gone
+expect sense_on 0
+goto 0 6 20 right
+run 2
+expect sense_on 1
+run 4 up                        ; a jump: not in mid-air
+expect pl_jump 6
+expect sense_on 0
+until pl_jump 0 - 50
+run 2
+expect sense_on 1
+run 1 fire                      ; SPACE: the trap goes off, the "?" goes first
+expect sense_on 0
+until pl_state 0 - 300
+run 2
+expect sense_on 0               ; disarmed: nothing to sense
+
+; --- the hints used up (as if three traps had been hinted): only the "?"
+poke hint_count 3
+goto 0 12 20 right
+goto 0 19 13 up
+goto 0 25 13 right
+run 2
+expect sense_on 1
+expect hint_row 0
+shot sense_alone

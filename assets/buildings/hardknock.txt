@@ -1,0 +1,17 @@
+; Hard Knock Hotel & Casino - three wings, six floors, six rooms. Slots, a stage, a rooftop
+; pool; one of every trap (and a second lighting rig).
+;   hk_rooms     hk_suite     hk_pool      (3rd-5th floor)
+;   hk_casino    hk_tables    hk_stage     (ground-2nd floor)
+room hk_casino   right=hk_tables                   up=hk_rooms
+room hk_tables   left=hk_casino   right=hk_stage   up=hk_suite
+room hk_stage    left=hk_tables                    up=hk_pool
+room hk_rooms    right=hk_suite                    down=hk_casino
+room hk_suite    left=hk_rooms    right=hk_pool    down=hk_tables
+room hk_pool     left=hk_suite                     down=hk_stage
+start hk_casino 2 20
+clock 305
+misses_ok 1
+sign BLD_HK_SIGN
+welcome BLD_HK_WELCOME
+palette magenta
+calls 3

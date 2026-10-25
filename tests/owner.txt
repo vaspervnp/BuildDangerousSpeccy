@@ -1,0 +1,42 @@
+; The owner (workers.asm, room data type 2): in the Mall's entrance he paces the 1st floor,
+; x 25-33. A disarmed trap he passes in a room not yet signed off is armed again - but
+; not with Thanos close by, and not once the room is signed off. Hazard i's state is at
+; *room_hazards+4+4*i; the socket at 30,13 is hazard 1.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+pokew campaign_single+1 bld_mall
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+run 1
+expect wk_on 2                  ; the owner, not a worker
+expect wk_y 13
+
+goto 0 6 20 right
+run 1 fire                      ; the cut trap downstairs, out of the way
+until pl_state 0 - 300
+goto 0 2 20 left
+goto 0 9 13 up
+goto 0 22 13 right
+run 1 fire                      ; the socket at 30,13
+until pl_state 0 - 300
+expect *room_hazards+8 1        ; disarmed
+run 300                         ; standing by it: he walks over it, does nothing
+expect *room_hazards+8 1
+goto 0 14 13 left               ; turn his back...
+until *room_hazards+8 0 - 1500  ; ...and it's back
+shot owner_rearmed
+goto 0 22 13 right
+run 1 fire                      ; again
+until pl_state 0 - 300
+expect *room_hazards+8 1
+run 1 mark                      ; and sign the room off at once
+run 3
+expect bld_marked 1
+goto 0 14 13 left
+run 1500                        ; he walks over it again and again: nothing now
+expect *room_hazards+8 1

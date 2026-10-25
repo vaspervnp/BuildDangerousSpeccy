@@ -1,0 +1,66 @@
+; Milestone 2: Fire on a hazard -> vignette -> caption -> energy -> disarmed.
+; Hazard list in room data: *room_hazards = count, then 4 bytes each (x, row, type, state):
+;   #0 live socket col 10 row 21 (bottom floor)   state at *room_hazards+4
+;   #1 live socket col 24 row 14 (middle floor)   state at *room_hazards+8
+; Reach: the socket must be within one column of Thanos's 2-column body.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_test
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+
+run 30
+expect energy 16
+expect *room_hazards+0 3
+expect *room_hazards+4 0
+shot hz_boot
+
+run 1 fire                      ; nothing in reach from x=3
+run 5
+expect pl_state 0
+expect energy 16
+
+run 25 right                    ; 5 steps to x=8: socket at col 10 is in reach
+expect pl_x 8
+run 5
+run 1 fire
+expect pl_state 1
+expect energy 16                ; traps cost time, not energy
+run 2
+shot hz_zap_flash               ; pen 0 flashed white
+run 4
+shot hz_zap_xray
+run 60
+shot hz_zap_singed              ; caption still up
+until pl_state 0 - 120          ; the rest of the vignette (133 frames in all)
+expect *room_hazards+4 1
+shot hz_disarmed
+
+run 1 fire                      ; already disarmed: nothing happens
+run 5
+expect pl_state 0
+expect energy 16                ; traps cost time, not energy
+
+run 100
+shot hz_caption_gone
+
+poke lang 1                     ; Greek (the menu's L key arrives with the title screen)
+run 300 right
+run 5 left
+expect pl_x 28
+run 60 up
+expect pl_y 13
+run 15 left                     ; x=25: socket at col 24 in reach
+expect pl_x 25
+run 5
+run 1 fire
+expect pl_state 1
+expect energy 16
+run 40
+shot hz_greek_caption
+until pl_state 0 - 120
+expect *room_hazards+8 1
+expect *room_hazards+12 0       ; the top-floor socket is untouched

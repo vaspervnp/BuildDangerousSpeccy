@@ -1,0 +1,17 @@
+; Title screen logo (rows 0-12 of the screen; tools/zxgfx.py tilemap).
+;   T bricks, I steel girder, L work lamps, Z barrier stripes. Thanos stands on the girder at
+;   both ends (sprites, campaign.asm title_show); DANGEROUS goes between the two rows of
+;   barrier in double-size letters.
+   L     L     L     L     L    
+  TTTT  T   T TTTTT T     TTTT  
+  T   T T   T   T   T     T   T 
+  T   T T   T   T   T     T   T 
+  TTTT  T   T   T   T     T   T 
+  T   T T   T   T   T     T   T 
+  T   T T   T   T   T     T   T 
+  TTTT   TTT  TTTTT TTTTT TTTT  
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+                                
+                                
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ

@@ -1,0 +1,17 @@
+; Grand Hotel - two wings, nine floors, six rooms.
+;   hotel_suite_w  hotel_suite_e    (6th-8th floor)
+;   hotel_rooms_w  hotel_rooms_e    (3rd-5th)
+;   hotel_lobby    hotel_bar        (ground-2nd)
+room hotel_lobby    right=hotel_bar      up=hotel_rooms_w
+room hotel_bar      left=hotel_lobby     up=hotel_rooms_e
+room hotel_rooms_w  right=hotel_rooms_e  up=hotel_suite_w down=hotel_lobby
+room hotel_rooms_e  left=hotel_rooms_w   up=hotel_suite_e down=hotel_bar
+room hotel_suite_w  right=hotel_suite_e  down=hotel_rooms_w
+room hotel_suite_e  left=hotel_suite_w   down=hotel_rooms_e
+start hotel_lobby 3 20
+clock 365
+misses_ok 2
+sign BLD_HOTEL_SIGN
+welcome BLD_HOTEL_WELCOME
+palette mauve
+calls 3

@@ -1,0 +1,187 @@
+; Milestone 4: every new hazard type, in the gallery room (one of each).
+; Hazard i's state is at *room_hazards+4+4*i. Energy is topped up before each trap
+; so eleven hits don't run it out.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_gallery
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+run 30
+expect *room_hazards+0 12
+shot gal_boot
+
+; --- bite
+run 20 right
+expect pl_x 7
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_bite
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+4 1
+
+; --- drown
+run 30 right
+expect pl_x 13
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_drown
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+8 1
+
+; --- head
+run 30 right
+expect pl_x 19
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_head
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+12 1
+
+; --- cut
+run 30 right
+expect pl_x 25
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_cut
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+16 1
+
+; --- ice
+run 15 right
+expect pl_x 28
+run 60 up
+expect pl_y 13
+run 5 right
+expect pl_x 29
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_ice
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+20 1
+
+; --- fire
+run 30 left
+expect pl_x 23
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_fire
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+24 1
+
+; --- squash
+run 25 left
+expect pl_x 18
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_squash
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+28 1
+
+; --- impale
+run 30 left
+expect pl_x 12
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_impale
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+32 1
+
+; --- poison
+run 20 left
+expect pl_x 8
+run 60 up
+expect pl_y 6
+run 25 right
+expect pl_x 13
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_poison
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+36 1
+
+; --- suck
+run 30 right
+expect pl_x 19
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_suck
+until pl_state 0 - 300          ; the whole vignette (2-4 s)
+expect *room_hazards+40 1
+
+; --- catapult
+run 30 right
+expect pl_x 25
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 20
+shot gal_catapult
+run 12
+shot gal_catapult_airborne
+until pl_state 0 - 300
+expect *room_hazards+44 1
+
+; --- the owner's papers: no energy, no Miss if left, +500
+run 15 right
+expect pl_x 28
+run 5
+poke energy 8
+run 1 fire
+expect pl_state 1
+expect energy 8
+run 70
+expect pl_state 0
+expect *room_hazards+48 1
+expect evidence 12
+shot gal_evidence_taken
+
+; every hazard disarmed: clean sign-off
+run 1 mark
+run 3
+expect bld_marked 1
+expect miss_tally 0

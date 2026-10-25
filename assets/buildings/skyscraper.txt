@@ -1,0 +1,21 @@
+; The Skyscraper - the owner's own tower. Two wings, twelve floors, eight rooms.
+; Something is taped under the boardroom stairs.
+;   sky_roof_w    sky_penthouse_e   (9th-11th floor)
+;   sky_server_w  sky_board_e       (6th-8th)
+;   sky_office_w  sky_office_e      (3rd-5th)
+;   sky_lobby     sky_atrium        (ground-2nd)
+room sky_lobby        right=sky_atrium       up=sky_office_w
+room sky_atrium       left=sky_lobby         up=sky_office_e
+room sky_office_w     right=sky_office_e     up=sky_server_w  down=sky_lobby
+room sky_office_e     left=sky_office_w      up=sky_board_e   down=sky_atrium
+room sky_server_w     right=sky_board_e      up=sky_roof_w    down=sky_office_w
+room sky_board_e      left=sky_server_w      up=sky_penthouse_e down=sky_office_e
+room sky_roof_w       right=sky_penthouse_e  down=sky_server_w
+room sky_penthouse_e  left=sky_roof_w        down=sky_board_e
+start sky_lobby 2 20
+clock 415
+misses_ok 1
+sign BLD_SKY_SIGN
+welcome BLD_SKY_WELCOME
+palette paleblue
+calls 3

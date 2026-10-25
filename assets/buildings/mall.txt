@@ -1,0 +1,16 @@
+; Big Box Mall - three wings, six floors, six rooms. One of every trap.
+;   mall_food    mall_fashion  mall_offices    (3rd-5th floor)
+;   mall_entry   mall_aisles   mall_storage    (ground-2nd floor)
+room mall_entry    right=mall_aisles                    up=mall_food
+room mall_aisles   left=mall_entry   right=mall_storage up=mall_fashion
+room mall_storage  left=mall_aisles                     up=mall_offices
+room mall_food     right=mall_fashion                   down=mall_entry
+room mall_fashion  left=mall_food    right=mall_offices down=mall_aisles
+room mall_offices  left=mall_fashion                    down=mall_storage
+start mall_entry 2 20
+clock 375
+misses_ok 2
+sign BLD_MALL_SIGN
+welcome BLD_MALL_WELCOME
+palette green
+calls 2

@@ -1,0 +1,150 @@
+; A clean run through Sunny Vale Apartments (4 rooms, 8 traps), the whole flow from the
+; title to the ending.
+;   room 2 sv_upper_w   room 3 sv_upper_e
+;   room 0 sv_lobby     room 1 sv_east
+; Each room's hazards: state of hazard i at *room_hazards+4+4*i. Energy 16 = 8 hats.
+; Covers stairs (up and down, left/right along a flight, through a ceiling both ways),
+; walking off both side edges, hazards staying disarmed when a room is revisited, and the
+; exit. goto fails the test if Thanos doesn't get to exactly that room/x/y.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_single   ; Sunny Vale alone: the campaign would go on to the mall
+run 5                           ; title screen
+expect game_state 4
+psgon 8                         ; the title jingle
+shot sv_title
+run 1 fire
+run 5                           ; the outdoor intro
+expect game_state 2
+run 60
+shot sv_intro
+run 260
+expect game_state 0             ; Thanos is in
+run 30
+expect cur_room 0
+expect pl_x 3
+expect pl_y 20
+expect energy 16
+shot sv_lobby
+
+; --- lobby: two live sockets, a flight of stairs between them
+goto 0 7 20 right
+run 1 fire
+run 1
+psgon 8                         ; the trap's sound
+until pl_state 0 -
+expect *room_hazards+4 1
+goto 0 12 20 right              ; the foot of the flight
+goto 0 13 19 up                 ; one step up is one step along
+goto 0 16 16 right              ; on a flight, right goes up it...
+goto 0 14 18 left               ; ...and left down
+shot sv_stairs
+goto 0 19 13 up                 ; the top: standing on the 1st floor
+run 10 up                       ; no more flight: up does nothing
+expect pl_x 19
+expect pl_y 13
+goto 0 27 13 right
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+8 1
+run 1 mark
+run 3
+expect bld_marked 1
+psgon 8                         ; the sign-off chime
+expect miss_tally 0
+
+; --- off the right edge into the east wing, same floor
+goto 1 0 13 right
+run 20
+shot sv_east
+goto 1 13 13 right              ; leaking pipe
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+8 1
+goto 1 3 13 left
+goto 1 10 20 down               ; down a flight rising left
+goto 1 16 20 right              ; ferret grille
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+4 1
+run 1 mark
+run 3
+expect bld_marked 3
+
+; --- up through the east wing's ceiling into the upper floors
+goto 1 10 20 left
+goto 1 3 13 up
+goto 1 17 13 right
+goto 1 23 6 up
+goto 1 27 6 right
+goto 3 18 20 up                 ; the flight carries on in the room above
+run 20
+shot sv_upper_e
+goto 3 14 20 left               ; leaking drum
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+4 1
+goto 3 22 20 right
+goto 3 28 13 up
+goto 3 21 13 left
+goto 3 14 6 up
+goto 3 24 6 right               ; gas stove
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+8 1
+run 1 mark
+run 3
+expect bld_marked 11
+
+; --- off the left edge into the upper west room
+goto 2 30 6 left
+run 20
+shot sv_upper_w
+goto 2 3 6 left
+goto 2 10 13 down
+run 1 fire                      ; live socket (the one at col 22 is safe)
+until pl_state 0 -
+expect *room_hazards+8 1
+goto 2 25 13 right
+goto 2 18 20 down
+goto 2 17 20 left               ; lamp on a frayed cord
+run 1 fire
+until pl_state 0 -
+expect *room_hazards+4 1
+run 1 mark
+run 3
+expect bld_marked 15
+
+; --- down through the floor into the lobby; its sockets are still disarmed
+goto 2 12 20 left
+goto 0 3 6 down
+expect *room_hazards+4 1
+expect *room_hazards+8 1
+goto 0 18 6 right
+goto 0 25 13 down
+goto 0 19 13 left
+goto 0 12 20 down
+goto 0 1 20 left
+run 1
+run 1 up                        ; all four rooms signed off: out
+run 3
+expect pl_state 2
+expect energy 16                ; traps cost time, not energy
+expect miss_tally 0
+expect game_state 3             ; outro: ribbon cut, crowd cheers
+run 160
+shot sv_outro
+until game_state 1 - 400        ; results panel
+shot sv_done
+print score 3
+run 1 fire                      ; Sunny Vale alone: the ending
+run 3
+expect game_state 5
+expect hi_score+1 #45           ; 004510 recorded as the hi-score
+expect hi_score+2 #10
+shot sv_ending
+run 1 fire
+run 3
+expect game_state 4

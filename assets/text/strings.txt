@@ -1,0 +1,156 @@
+; ID | English | Greek
+; Capitals only (lower case is folded, Greek accents are dropped). Max 40 characters.
+CAP_ZAP | Filed under: electrocution. Again. | Καταχωρήθηκε: ηλεκτροπληξία. Ξανά.
+MARK_SAFE | Signed off. Room is safe. | Υπογράφηκε. Το δωμάτιο είναι ασφαλές.
+MARK_MISS | Miss! The crowd will find it first. | Αστοχία! Το κοινό θα το βρει πρώτο.
+MARK_ALREADY | Already signed off. | Έχει ήδη υπογραφεί.
+EXIT_LOCKED | Can't leave. Rooms still unchecked. | Δεν φεύγω. Υπάρχουν ανέλεγκτα δωμάτια.
+EXIT_DONE | Inspection complete. | Η επιθεώρηση ολοκληρώθηκε.
+CAP_BITE | Bitten by a guard ferret. Noted. | Δάγκωμα από κουνάβι-φύλακα. Σημειώθηκε.
+CAP_DROWN | Flooded. I did not bring the duck. | Πλημμύρα. Την πάπια δεν την έφερα εγώ.
+CAP_HEAD | One zip tie. One head. On file. | Ένα δεματικό. Ένα κεφάλι. Στο αρχείο.
+CAP_CUT | Doors: in a hurry. Me: in halves. | Πόρτες: βιαστικές. Εγώ: στα δύο.
+CAP_IMPALE | Soft landing. Soft for whom? | Μαλακή προσγείωση. Για ποιον;
+CAP_SQUASH | The sign lied. I am now flat. | Η πινακίδα έλεγε ψέματα. Είμαι επίπεδος.
+CAP_FIRE | Gas leak meets pilot light. Medium-well. | Διαρροή γκαζιού. Ψημένος μέτρια.
+CAP_ICE | Freezer handle: decorative. Me: frozen. | Καταψύκτης χωρίς χερούλι. Πάγωσα.
+CAP_POISON | 'Cleaning supplies'. I feel cleansed. | 'Καθαριστικά'. Νιώθω πολύ καθαρός.
+CAP_SUCK | Vent with no grille. It inhaled me. | Αεραγωγός χωρίς σχάρα. Με ρούφηξε.
+CAP_CATAPULT | Cable snapped. Saw the roof. Both sides. | Κόπηκε το συρματόσχοινο. Είδα τη στέγη.
+OUT_TIMEUP | Time's up! | Τέλος χρόνου!
+OUT_DELAY | The owner delays the opening. | Ο ιδιοκτήτης αναβάλλει τα εγκαίνια.
+OUT_RIBBON | The ribbon is cut. The crowd goes in. | Η κορδέλα κόπηκε. Το κοινό μπαίνει.
+OUT_FIRED | Contract terminated. | Η σύμβαση καταγγέλθηκε.
+OUT_NOENERGY | Reputation: zero. Even for an immortal. | Φήμη: μηδέν. Ακόμα και για αθάνατο.
+OUT_CLEAN | Clean sweep! Not a single miss. | Καθαρή δουλειά! Καμία αστοχία.
+OUT_GOOD | A few misses. Nobody noticed. | Λίγες αστοχίες. Κανείς δεν κατάλαβε.
+OUT_BARELY | Passed. Barely. | Πέρασε. Με το ζόρι.
+LBL_MISSES | Misses | Αστοχίες
+LBL_TIME | Time bonus | Μπόνους χρόνου
+LBL_ENERGY | Energy bonus | Μπόνους ενέργειας
+LBL_CLEAN | Clean sweep | Καθαρή σάρωση
+LBL_SCORE | Score | Βαθμολογία
+PRESS_FIRE | Press fire | Πατήστε fire
+INTRO_2 | Our inspector will take a quick look. | Ο επιθεωρητής θα ρίξει μια ματιά.
+INTRO_3 | A quick one. The crowd is waiting! | Γρήγορα όμως. Το κοινό περιμένει!
+OUTRO_WIN1 | All clear. Cut your ribbon. | Όλα καθαρά. Κόψτε την κορδέλα.
+OUTRO_WIN2 | The crowd cheers. For the inspector. | Το κοινό ζητωκραυγάζει τον επιθεωρητή.
+OUTRO_DELAY1 | Not yet. I'm not done in there. | Όχι ακόμα. Δεν τελείωσα εκεί μέσα.
+OUTRO_DELAY2 | Postponed. The crowd sighs. | Αναβολή. Το κοινό αναστενάζει.
+OUTRO_LATE1 | Time's up! I'm cutting it. | Τέλος χρόνου! Την κόβω.
+OUTRO_LATE2 | Someone will find the ferret. | Κάποιος θα βρει το κουνάβι.
+OUTRO_HURT1 | Our inspector has had enough. | Ο επιθεωρητής μας τα παράτησε.
+BLD_SV_SIGN | Sunny Vale Apts. | Πολυκατοικία Λιακάδα
+BLD_SV_WELCOME | Welcome to Sunny Vale Apartments! | Καλώς ήρθατε στην πολυκατοικία Λιακάδα!
+BLD_TEST_SIGN | Test building | Κτίριο δοκιμών
+BLD_TEST_WELCOME | Welcome to the test building! | Καλώς ήρθατε στο κτίριο δοκιμών!
+BLD_MALL_SIGN | Big Box Mall | Εμπορικό Κέντρο
+BLD_MALL_WELCOME | Welcome to Big Box Mall! Mind the sales! | Καλώς ήρθατε! Προσφορές για όλους!
+BLD_HOTEL_SIGN | Grand Hotel | Ξενοδοχείο Γκραντ
+BLD_HOTEL_WELCOME | Welcome to the Grand Hotel. Check in! | Καλώς ήρθατε στο Ξενοδοχείο Γκραντ!
+BLD_HOSP_SIGN | Mega Hospital | Μέγα Νοσοκομείο
+BLD_HOSP_WELCOME | Welcome to Mega Hospital. Get well soon! | Καλώς ήρθατε! Περαστικά σας!
+BLD_HK_SIGN | Hard Knock Casino | Καζίνο Hard Knock
+BLD_HK_WELCOME | Welcome to Hard Knock! Let's rock! | Καλώς ήρθατε στο Hard Knock! Ροκ!
+BLD_SKY_SIGN | The Skyscraper | Ο Ουρανοξύστης
+BLD_SKY_WELCOME | Welcome to my tower. Nothing to see! | Ο πύργος μου. Τίποτα ύποπτο εδώ!
+CAP_EVIDENCE | An insurance claim. Dated opening day! | Ασφαλιστήριο για τη μέρα των εγκαινίων!
+TITLE_TAG | Immortal. Unimpressed. On duty. | Αθάνατος. Ασυγκίνητος. Σε υπηρεσία.
+TITLE_START | Press fire to start | Πατήστε fire για να ξεκινήσετε
+TITLE_LANG | L: Ελληνικά | L: English
+TITLE_KEYS1 | Move: cursor keys or Q A O P | Κίνηση: βελάκια ή Q A O P
+TITLE_KEYS2 | Space: trap  M: sign off  H: pause | Space: παγίδα  M: υπογραφή  H: παύση
+TITLE_KEYS3 | Up at the exit door: leave | Πάνω στην έξοδο: αποχώρηση
+TITLE_CREDIT | REVIVE8BIT - 2026 - VASPER | REVIVE8BIT - 2026 - VASPER
+LBL_HISCORE | Hi-score | Ρεκόρ
+LBL_FINAL | Final score | Τελικό σκορ
+OVER_BIG | Terminated | Απόλυση
+OVER_1 | The contract has been terminated. | Η σύμβαση καταγγέλθηκε.
+OVER_2 | He is immortal. He'll apply again. | Είναι αθάνατος. Θα ξανακάνει αίτηση.
+END_BIG | The end | Τέλος
+END_EVIDENCE1 | He serves a demolition order. | Επιδίδει διαταγή κατεδάφισης.
+END_EVIDENCE2 | The insurance scam is over. | Η απάτη με την ασφάλεια τελείωσε.
+END_EVIDENCE3 | The crowd cheers the inspector. | Το κοινό ζητωκραυγάζει τον επιθεωρητή.
+END_PLAIN1 | Every building is open. And safe. | Όλα τα κτίρια άνοιξαν. Και είναι ασφαλή.
+END_PLAIN2 | Nobody asked about the paperwork. | Κανείς δεν ρώτησε για τα χαρτιά.
+PHONE_RING | Ring ring! It's Tasha. | Ντριν ντριν! Η Τασία.
+PHONE_END_GOOD | Call over. Still married. | Τέλος κλήσης. Ακόμα παντρεμένοι.
+PHONE_END_BAD | Call over. Married? Unclear. | Τέλος κλήσης. Παντρεμένοι; Άγνωστο.
+PHONE_SILENT1 | Hello?! Are you even | Εμπρός;! Με ακούς
+PHONE_SILENT2 | listening? HELLO?! | καθόλου; ΕΜΠΡΟΣ;!
+RANT1A | And ANOTHER thing! | Και κάτι ΑΚΟΜΑ!
+RANT1B | You never call. I call! | Ποτέ δεν παίρνεις εσύ!
+RANT2A | Do you even listen to me? | Με ακούς καθόλου;
+RANT2B | Don't answer that. | Μην απαντήσεις.
+RANT3A | I gave you the best 300 | Σου έδωσα τα 300 καλύτερα
+RANT3B | years of my life, Thanos! | χρόνια της ζωής μου, Θάνο!
+CALL1_Q1 | Thanos! Dinner is at eight. | Θάνο! Το φαγητό είναι στις 8.
+CALL1_Q2 | Will you be home this time? | Θα έρθεις αυτή τη φορά;
+CALL1_GOOD | Yes dear. Eight. Sharp. | Ναι, αγάπη μου. Στις 8.
+CALL1_BAD | Time is relative, dear. | Ο χρόνος είναι σχετικός.
+CALL1_YES1 | Good. Bring bread. | Ωραία. Φέρε και ψωμί.
+CALL1_YES2 | And don't die on the way. | Και μην πεθάνεις στο δρόμο.
+CALL1_NO1 | Relative? My MOTHER is | Σχετικός; Η μάνα μου
+CALL1_NO2 | coming. SHE is a relative! | έρχεται. ΑΥΤΟ είναι βέβαιο!
+CALL2_Q1 | The kitchen tap is dripping | Η βρύση της κουζίνας στάζει
+CALL2_Q2 | again. Since Tuesday. | πάλι. Από την Τρίτη.
+CALL2_GOOD | I'll inspect it tonight. | Θα την επιθεωρήσω απόψε.
+CALL2_BAD | Have you tried hitting it? | Δοκίμασες να τη χτυπήσεις;
+CALL2_YES1 | You'd better. You inspect | Καλά θα κάνεις. Τις βρύσες
+CALL2_YES2 | everyone else's taps. | των άλλων τις επιθεωρείς!
+CALL2_NO1 | I hit it. Now it's a | Τη χτύπησα. Τώρα είναι
+CALL2_NO2 | fountain. The cat swims. | σιντριβάνι. Η γάτα κολυμπάει.
+CALL3_Q1 | Do you know what day it is? | Ξέρεις τι μέρα είναι σήμερα;
+CALL3_Q2 | Think carefully, Thanos. | Σκέψου καλά, Θάνο.
+CALL3_GOOD | Our 312th anniversary! | Η 312η επέτειός μας!
+CALL3_BAD | Tuesday. Always Tuesday. | Τρίτη. Πάντα Τρίτη είναι.
+CALL3_YES1 | Awww. You remembered. | Ωωω. Το θυμήθηκες.
+CALL3_YES2 | Don't be late, my hero. | Μην αργήσεις, ήρωά μου.
+CALL3_NO1 | 312 years together, and | 312 χρόνια μαζί, και είναι
+CALL3_NO2 | it's TUESDAY? Couch. Tonight. | ΤΡΙΤΗ; Στον καναπέ απόψε.
+CALL4_Q1 | My mother wants a word. | Η μάνα μου θέλει να σου πει
+CALL4_Q2 | She's right here. Say hi! | κάτι. Είναι εδώ. Πες γεια!
+CALL4_GOOD | Mother! What a joy. Truly. | Μητέρα! Τι χαρά. Αλήθεια.
+CALL4_BAD | Tell her I'm on fire. | Πες της ότι καίγομαι.
+CALL4_YES1 | ...she hung up. She says | ...το έκλεισε. Λέει πως
+CALL4_YES2 | you're almost tolerable. | είσαι σχεδόν υποφερτός.
+CALL4_NO1 | She says: good, stay there. | Λέει: ωραία, μείνε εκεί.
+CALL4_NO2 | Now she wants the phone back. | Τώρα θέλει πάλι το τηλέφωνο.
+CALL5_Q1 | Are you wearing the blue | Φοράς το μπλε πουκάμισο
+CALL5_Q2 | shirt I ironed for you? | που σου σιδέρωσα;
+CALL5_GOOD | Blue as your eyes, dear. | Μπλε σαν τα μάτια σου.
+CALL5_BAD | It WAS blue this morning. | Ήταν μπλε το πρωί.
+CALL5_YES1 | Charmer. Now go inspect | Γλυκομίλητε. Άντε, πήγαινε
+CALL5_YES2 | something. Kisses! | να επιθεωρήσεις. Φιλιά!
+CALL5_NO1 | WAS? What did you DO to it? | ΗΤΑΝ; Τι του έκανες;
+CALL5_NO2 | That was my father's shirt! | Ήταν του πατέρα μου!
+CALL6_Q1 | Pick up milk on your way | Πάρε γάλα στο δρόμο για
+CALL6_Q2 | home. And eggs. Twelve. | το σπίτι. Και αυγά. Δώδεκα.
+CALL6_GOOD | Milk. Eggs. Twelve. Done. | Γάλα. Αυγά. Δώδεκα. Έγινε.
+CALL6_BAD | Can't. I'm being zapped. | Δεν μπορώ. Ηλεκτροπληξία.
+CALL6_YES1 | Love you. Don't get | Σ' αγαπώ. Μη γίνεις πάλι
+CALL6_YES2 | flattened again. The rug! | πίτα. Το χαλί, ξέρεις!
+CALL6_NO1 | You said that yesterday. | Το ίδιο είπες και χθες.
+CALL6_NO2 | And the day before. No milk! | Και προχθές. Γάλα, Θάνο!
+NEPHEW_HI1 | Bambis: Selfie with the inspector! | Μπάμπης: Σέλφι με τον επιθεωρητή!
+NEPHEW_BYE1 | Like and subscribe, Mr Thanos! | Κάνε λάικ και σάμπσκραϊμπ, κύριε!
+NEPHEW_HI2 | Bambis: Say hi to my 12 followers! | Μπάμπης: Πες γεια στους 12 φόλοουερς!
+NEPHEW_BYE2 | Flash was off. One more! ...Done. | Δεν είχε φλας. Άλλη μία! ...Τέλεια.
+NEPHEW_HI3 | Bambis: Uncle says you're too slow. | Μπάμπης: Ο θείος λέει ότι αργείς.
+NEPHEW_BYE3 | Now you're content! Bye! | Τώρα είσαι περιεχόμενο! Γεια!
+WORKER1 | Worker: Not finished! Come back Monday! | Εργάτης: Δεν τελειώσαμε! Έλα Δευτέρα!
+WORKER2 | Worker: Inspector? Here, catch! | Εργάτης: Επιθεωρητής; Για πιάσε!
+WORKER3 | Worker: That bit's not on the plans! | Εργάτης: Αυτό δεν είναι στα σχέδια!
+WORKER4 | Worker: Mind your head! ...Too late. | Εργάτης: Πρόσεχε το κεφάλι! ...Αργά.
+OUCH | Ow! That's going in the report. | Άου! Αυτό θα μπει στην αναφορά.
+HINT_TRAP1 | You are in front of a trap. | Είσαι μπροστά σε μια παγίδα.
+HINT_TRAP2 | Press SPACE to activate it. | Πάτα SPACE για να την ενεργοποιήσεις.
+HINT_OWN1 | From now on, you are on your own. | Από εδώ και πέρα είσαι μόνος σου.
+HINT_OWN2 | Find and activate all the traps. | Βρες κι ενεργοποίησε όλες τις παγίδες.
+HINT_MARK1 | This room is clear. Don't forget | Το δωμάτιο είναι καθαρό. Μην ξεχάσεις
+HINT_MARK2 | to sign it off: press M. | να το σημειώσεις ως ελεγμένο με το M.
+BLACKOUT | Who turned off the lights?! | Ποιος έσβησε τα φώτα;!
+OWNER_REARM | Owner: That was decorative! | Ιδιοκτήτης: Ήταν διακοσμητικό!
+PAUSED | Paused. H or both fires to carry on. | Παύση. H ή Fire 1 και 2 για συνέχεια.
+PHONE_HINT | Up/down, then fire: | Πάνω/κάτω και fire:
+LOGO_DANGEROUS | Dangerous | Dangerous

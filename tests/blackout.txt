@@ -1,0 +1,31 @@
+; Blackouts (blackout.asm): from the second building on, every 40-60 s the lights go for
+; 5 s - pen 1 black, pen 2 dark blue, only white things show; they stay out through a
+; room change. Never in the first building.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+poke workers_enabled 0            ; no workers (tests/workers.txt)
+pokew campaign_single+1 bld_mall
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+run 600
+expect blackout 0               ; the first building of the campaign: none
+expect blackout_timer 0
+expect blackout_timer+1 0
+
+poke camp_index 1               ; as if this were the second building
+run 2
+expect blackout 0
+pokew blackout_timer 30         ; (instead of waiting 40-60 s)
+run 30
+expect blackout 1               ; lights out
+shot blackout_dark
+goto 1 0 20 right 400           ; into the next room, still dark
+expect blackout 1
+shot blackout_next_room
+until blackout 0 - 300          ; 5 s, then the lights again
+shot blackout_over

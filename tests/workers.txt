@@ -1,0 +1,68 @@
+; Last-minute workers (Sunny Vale upper east, room 3: one pacing x 9-19 on the ground floor,
+; screen row 21). With Thanos on his floor he raises a tool, then throws it at him.
+; Head-height tools are ducked, feet-height ones jumped; a hit costs half a hat.
+; The kind is random, so the script sets the row of each tool once it is in the air.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+run 1
+expect wk_on 0                  ; nobody working in the lobby
+
+goto 0 12 20 right              ; up through the lobby and the east wing
+goto 0 19 13 up
+goto 1 0 13 right
+goto 1 17 13 right
+goto 1 23 6 up
+goto 1 27 6 right
+goto 3 18 20 up                 ; the flight carries on in the room above
+run 1
+expect wk_on 1
+expect wk_x 5                   ; he starts at the left end of his beat (9-19)
+expect wk_y 20
+goto 3 15 20 left               ; clear of the flight down at x 26
+poke energy 16
+
+; --- a hammer at head height: duck
+until wk_pose 1 - 200           ; tool up: the warning
+shot worker_windup
+until pj_on 1 - 40              ; thrown, from beside him towards Thanos
+
+expect pj_dx 1
+poke pj_row 20
+run 9
+shot worker_throw
+until pj_on 0 down 120          ; ducked under it: it flies on into the wall
+shot worker_ducked
+expect energy 16
+expect pl_x 15
+run 1
+
+run 300
+expect wk_pose 0                 ; ~8 s after the throw: still resting (10 s between)
+
+; --- nails at the feet: jump
+until pj_on 1 - 700             ; he rests 10 s between throws
+poke pj_row 21
+until pj_x 14 - 40
+run 1 up                        ; straight up
+until pj_on 0 - 120
+expect energy 16
+until pl_jump 0 - 40
+run 8
+expect pl_y 20
+
+; --- and one he doesn't dodge
+until pj_on 1 - 700             ; he rests 10 s between throws
+poke pj_row 21
+until pj_on 0 - 120
+expect energy 15                ; half a hat
+expect pl_x 15
+shot worker_hit
+run 20
+expect pl_wait 10               ; still reeling

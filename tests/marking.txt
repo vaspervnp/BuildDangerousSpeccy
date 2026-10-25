@@ -1,0 +1,52 @@
+; Milestone 3, Miss path: exit gate, signing off a room that still has live hazards.
+; Test building = one room; exit door at col 36 on the bottom floor (x 35 or 36 reaches it).
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_test
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+
+run 30
+expect bld_marked 0
+expect miss_tally 0
+expect energy 16
+shot mk_boot
+
+run 1 up                        ; not at the exit: nothing happens
+run 3
+expect pl_state 0
+
+run 300 right
+run 15 left                     ; x=26, in front of the exit
+expect pl_x 26
+run 5
+run 1 up                        ; room not signed off yet: exit stays shut
+run 3
+expect pl_state 0
+run 20
+shot mk_exit_locked
+
+run 1 mark                      ; 3 live sockets still in the room: Miss
+run 3
+expect bld_marked 1
+expect miss_tally 1
+expect energy 12
+run 20
+shot mk_miss
+
+run 1 mark                      ; already signed off: no second Miss, no energy
+run 3
+expect miss_tally 1
+expect energy 12
+
+run 1 up                        ; every room signed off (with a Miss): exit opens
+run 3
+expect pl_state 2
+run 20
+shot mk_exit_done
+
+run 10 left                     ; input locked once he has left
+expect pl_x 26

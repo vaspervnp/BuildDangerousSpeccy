@@ -1,0 +1,13 @@
+; Sunny Vale Apartments - tutorial building. Two wings, six floors, four rooms.
+;   sv_upper_w  sv_upper_e      (3rd-5th floor)
+;   sv_lobby    sv_east         (ground-2nd floor)
+room sv_lobby    right=sv_east    up=sv_upper_w
+room sv_east     left=sv_lobby    up=sv_upper_e
+room sv_upper_w  right=sv_upper_e down=sv_lobby
+room sv_upper_e  left=sv_upper_w  down=sv_east
+start sv_lobby 3 20
+clock 335
+misses_ok 2
+sign BLD_SV_SIGN
+welcome BLD_SV_WELCOME
+calls 2

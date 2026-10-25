@@ -1,0 +1,45 @@
+; Smoke test for the engine skeleton, using assets/rooms/test.txt.
+; Thanos starts bottom-left (x=3, y=20). A step takes STEP_DELAY+1 = 5 frames.
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_test
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+
+run 30                          ; init: clear screen + decode/draw the room
+shot boot
+expect pl_x 3
+expect pl_y 20
+
+run 300 right                   ; walk into the right wall: furthest x is 29
+expect pl_x 29
+shot bottom_right
+
+run 5 left                      ; a step back onto the ladder at cols 28-29
+expect pl_x 28
+run 3
+
+run 60 up                       ; climb 7 rows to the middle floor, then stop at the top
+expect pl_y 13
+shot climbed_middle
+
+run 200 left                    ; walk across the middle floor, through the upper ladder
+expect pl_x 1
+expect pl_y 13
+
+run 35 right                    ; 7 steps to the upper ladder at cols 8-9
+expect pl_x 8
+run 60 up
+expect pl_y 6
+shot top_floor
+
+run 15 down                     ; 3 rows down the shaft...
+expect pl_y 9
+run 5 right                     ; ...step off sideways and fall to the middle floor
+run 30
+expect pl_x 9
+expect pl_y 13
+shot fell

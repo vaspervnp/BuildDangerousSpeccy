@@ -1,0 +1,5 @@
+; Engine test building: one room with live and safe sockets and the exit door.
+room test
+start test 3 20
+sign BLD_TEST_SIGN
+welcome BLD_TEST_WELCOME

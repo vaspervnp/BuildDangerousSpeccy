@@ -1,0 +1,50 @@
+; Escalators (Big Box Mall entrance, room 0): a pair rising right between the ground
+; floor (y 21) and the 1st floor (y 14). Up one: foot x 7, top x 14. Down one: top x 23,
+; foot x 16. Once on, they carry him: no keys held, 3 frames a step (stairs take 5).
+
+poke calls_enabled 0              ; no phone calls in this script (tests/phone.txt has them)
+poke nephew_enabled 0             ; no selfies either (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew campaign_single+1 bld_mall
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+expect cur_room 0
+
+goto 0 2 20 right               ; the foot of the up escalator
+goto 0 3 19 up                  ; step on...
+run 2
+psgon 9                         ; the escalator hums
+poke clock_lo #50               ; a known clock
+run 1 esc                       ; pause mid-ride: everything stops, the clock too
+expect paused 1
+expect pl_x 3
+run 120
+expect pl_x 3
+expect clock_lo #50
+run 1 esc                       ; and carry on
+expect paused 0
+until pl_y 13 - 25              ; ...and ride the rest, no keys, in under 25 frames
+expect pl_x 9
+shot esc_top
+run 1
+run 15 down                     ; can't walk down an up escalator
+expect pl_x 9
+expect pl_y 13
+
+goto 0 18 13 right              ; the top of the down escalator
+goto 0 17 14 down
+until pl_y 20 - 25
+expect pl_x 11
+run 1
+run 15 up                       ; can't walk up a down escalator: up is a jump here
+until pl_jump 0 - 40            ; ...straight up and down again
+run 6
+expect pl_x 11
+expect pl_y 20
+run 15 left                     ; off the bottom, walking as normal
+expect pl_x 8
+expect pl_y 20

@@ -1,0 +1,16 @@
+; Mega Hospital - three wings, six floors, six rooms. Full of things that look like traps.
+;   hosp_surgery  hosp_icu    hosp_pharmacy   (3rd-5th floor)
+;   hosp_er       hosp_wards  hosp_lab        (ground-2nd floor)
+room hosp_er        right=hosp_wards                     up=hosp_surgery
+room hosp_wards     left=hosp_er       right=hosp_lab    up=hosp_icu
+room hosp_lab       left=hosp_wards                      up=hosp_pharmacy
+room hosp_surgery   right=hosp_icu                       down=hosp_er
+room hosp_icu       left=hosp_surgery  right=hosp_pharmacy down=hosp_wards
+room hosp_pharmacy  left=hosp_icu                        down=hosp_lab
+start hosp_er 2 20
+clock 335
+misses_ok 1
+sign BLD_HOSP_SIGN
+welcome BLD_HOSP_WELCOME
+palette cyan
+calls 3

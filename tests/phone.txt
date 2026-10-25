@@ -1,0 +1,65 @@
+; Tasha's calls (Sunny Vale: two; the test fixes them at 25 s and 70 s into the
+; inspection, real ones are random after 20 s). Thanos stands in the
+; lobby throughout. Call scripts go round in order: 1 dinner (right answer on top),
+; 2 the tap (right answer below), 3 the anniversary (right answer below).
+
+poke nephew_enabled 0             ; no selfies (tests/nephew.txt)
+poke workers_enabled 0            ; no workers either (tests/workers.txt)
+pokew boot_campaign campaign_single
+run 5
+run 1 fire                      ; title: start
+run 3
+run 1 fire                      ; skip the outdoor intro
+until game_state 0 -
+expect pl_state 0
+pokew bld_calls 25              ; a known schedule
+pokew bld_calls+2 70
+pokew bld_calls+4 0
+
+; --- call 1: answered right
+until pl_state 3 - 1400         ; 25 s in, the phone rings
+expect call_next 1
+expect call_state 0
+run 2
+psgon 8                         ; brrring
+shot phone_ring
+until call_state 3 - 200        ; she has asked: pick an answer
+shot phone_panel
+expect call_choice 0
+run 1 down
+run 1
+expect call_choice 1
+run 1 up
+run 1
+expect call_choice 0
+run 1 fire                      ; "Yes dear. Eight. Sharp."
+run 1
+expect call_happy 1
+expect score+2 #50              ; a good husband scores
+until pl_state 0 - 300          ; quick: she says goodbye and hangs up
+shot phone_after
+
+; --- call 2: answered wrong (the top line is the wrong one this time)
+until pl_state 3 - 2500         ; 70 s in
+expect call_next 2
+until call_state 3 - 200
+run 1 fire                      ; "Have you tried hitting it?"
+run 1
+expect call_happy 0
+expect call_qlen 2              ; her reply, then a rant
+until pl_state 0 - 500
+
+; --- call 3, made up: nothing more is due in Sunny Vale, so rewind the schedule.
+; Silence: she notices, then it goes like a wrong answer. In Greek.
+run 100
+expect pl_state 0               ; no third call by itself
+poke lang 1
+poke call_next 1
+until pl_state 3 - 5
+until call_state 3 - 200
+shot phone_panel_gr
+until call_state 1 - 450        ; 8 s of silence
+expect call_qlen 3              ; "Hello?!", her reply, a rant
+until pl_state 0 - 600
+expect call_happy 0
+shot phone_after_silence
