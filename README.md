@@ -11,6 +11,10 @@ The real mistake is a **Miss**: signing a room off while a trap is still live in
 story, the traps and the campaign are in the CPC's [scenario.md](docs/scenario.md), and
 its technical plan is in [plan.md](docs/plan.md).
 
+**Player's manual:** [English](manual.md) ([PDF](manual.pdf)) · [Ελληνικά](manual_gr.md)
+([PDF](manual_gr.pdf)): loading, controls, how to play, the distractions, the buildings,
+scoring and tips, with screenshots (`docs/img/`).
+
 ## Running
 
 ```bash
@@ -98,6 +102,7 @@ make art        # assets/gfx/*.png again from tools/zxart.py
 make test       # every tests/*.txt on the headless Spectrum, 48K and 128K
 make check      # the tape loaded through the real 48K and 128K ROMs
 make run        # the tape in FBZX
+make manual     # manual.pdf and manual_gr.pdf from the Markdown
 ```
 
 `tools/zxrun.py` is a headless Spectrum: the `z80` module plus the interrupt, keyboard,
@@ -123,6 +128,7 @@ interrupt a frame, and that the AY is found only on the 128K.
 | `tools/narrow.py` | The one-off 40 → 32 column conversion of the CPC's rooms. |
 | `tools/zxrun.py`, `tools/route.py` | Test harness and route planner. |
 | `tools/mktap.py`, `tools/mkz80.py`, `tools/zxcheck.py` | Tape, snapshots, real-ROM check (from the Vrouves port). |
+| `manual.md`, `manual_gr.md`, `tools/mkmanual.py` | The player's manuals and their PDFs (from the CPC). |
 
 ---
 

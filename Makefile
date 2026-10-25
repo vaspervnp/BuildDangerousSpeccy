@@ -6,6 +6,7 @@
 #   make run        the tape in FBZX
 #   make test       every tests/*.txt script on the headless Spectrum, 48K and 128K
 #   make check      the tape loaded through the real 48K and 128K ROMs
+#   make manual     the manuals, English and Greek, as PDFs
 #   make clean
 
 RASM ?= rasm
@@ -107,7 +108,14 @@ check: $(B)/bd.tap
 		if [ $$r = 2 ]; then echo "    skipped (no emulator or ROM)"; \
 		elif [ $$r != 0 ]; then exit 1; fi; done
 
+# The manuals, English and Greek, as PDFs (needs: pip install markdown fpdf2, and the DejaVu
+# fonts). Their pictures in docs/img/ are screenshots from make test's runs (build/shots/48/).
+manual: manual.pdf manual_gr.pdf
+
+manual.pdf manual_gr.pdf: %.pdf: %.md tools/mkmanual.py $(wildcard docs/img/*.png)
+	$(PY) tools/mkmanual.py $< $@
+
 clean:
 	rm -rf $(B)
 
-.PHONY: all art run test check clean
+.PHONY: all art run test check manual clean
