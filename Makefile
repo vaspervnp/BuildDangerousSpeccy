@@ -7,6 +7,7 @@
 #   make test       every tests/*.txt script on the headless Spectrum, 48K and 128K
 #   make check      the tape loaded through the real 48K and 128K ROMs
 #   make manual     the manuals, English and Greek, as PDFs
+#   make video      build/video/sunnyvale.mp4: two minutes of play, with the 128K's sound
 #   make clean
 
 RASM ?= rasm
@@ -108,6 +109,17 @@ check: $(B)/bd.tap
 		if [ $$r = 2 ]; then echo "    skipped (no emulator or ROM)"; \
 		elif [ $$r != 0 ]; then exit 1; fi; done
 
+# A video: Sunny Vale played through with every distraction on, then on into the mall,
+# recorded on a 128K with its AY (videos/sunnyvale.txt) and cut at two minutes.
+# Needs ffmpeg.
+video: $(B)/video/sunnyvale.mp4
+
+$(B)/video/%.mp4: videos/%.txt $(B)/bd.bin tools/zxrun.py
+	mkdir -p $(B)/video
+	$(PY) tools/zxrun.py $(B)/bd.bin --sym $(B)/bd.sym --model 128 --script $< \
+	    --out $(B)/shots/video --autophone --autododge --seconds 120 \
+	    --wav $(B)/video/$*.wav --video $@
+
 # The manuals, English and Greek, as PDFs (needs: pip install markdown fpdf2, and the DejaVu
 # fonts). Their pictures in docs/img/ are screenshots from make test's runs (build/shots/48/).
 manual: manual.pdf manual_gr.pdf
@@ -118,4 +130,4 @@ manual.pdf manual_gr.pdf: %.pdf: %.md tools/mkmanual.py $(wildcard docs/img/*.pn
 clean:
 	rm -rf $(B)
 
-.PHONY: all art run test check manual clean
+.PHONY: all art run test check manual video clean

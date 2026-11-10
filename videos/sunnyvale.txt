@@ -1,0 +1,180 @@
+; Video: a full inspection of Sunny Vale Apartments, the first building, as the player
+; sees it - title, the owner's speech, all eight traps, Tasha's calls (answered with Fire
+; about a second after she asks: --autophone), Bambis, the workers, out through the door,
+; the crowd, the results and on into the Big Box Mall (cut at two minutes). The route is
+; tests/route_sunnyvale.txt's (tools/route.py), with every distraction left on. Recorded
+; on a 128K (the AY's sound) by `make video`.
+run 150                         ; the title screen
+run 1 fire                      ; title: start
+run 3
+until game_state 0 - 3000       ; the owner's speech; Thanos walks in
+run 1                           ; let go of Fire (a trap may be in reach already)
+goto 0 6 20 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; electric at 8,20
+until pl_state 0 -
+goto 0 12 20 right 3000
+goto 0 19 13 up 3000
+goto 0 25 13 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; electric at 27,13
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off sv_lobby
+goto 1 12 13 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; drown at 14,12
+until pl_state 0 -
+goto 1 3 13 left 3000
+goto 1 10 20 down 3000
+goto 1 14 20 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; bite at 16,21
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off sv_east
+goto 1 10 20 left 3000
+goto 1 3 13 up 3000
+goto 1 16 13 right 3000
+goto 1 23 6 up 3000
+goto 1 27 6 right 3000
+goto 3 18 20 up 3000
+goto 3 14 20 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; poison at 13,21
+until pl_state 0 -
+goto 2 17 20 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; head at 16,16
+until pl_state 0 -
+goto 2 18 20 right 3000
+goto 2 25 13 up 3000
+goto 2 12 13 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; electric at 11,13
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off sv_upper_w
+goto 3 21 13 right 3000
+goto 3 14 6 up 3000
+goto 3 23 6 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; fire at 25,7
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off sv_upper_e
+goto 3 14 6 left 3000
+goto 3 21 13 down 3000
+goto 3 28 13 right 3000
+goto 3 21 20 down 3000
+goto 3 18 20 left 3000
+goto 1 27 6 down 3000
+goto 1 23 6 left 3000
+goto 1 16 13 down 3000
+goto 0 19 13 left 3000
+goto 0 12 20 down 3000
+goto 0 1 20 left 3000
+run 1
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 up                        ; out through the door
+until game_state 1 - 3000      ; outro, then the results
+run 250                         ; the results
+run 1 fire                      ; on to the Big Box Mall: its owner's welcome, and in
+until game_state 0 - 3000       ; the owner's speech; Thanos walks in
+run 1                           ; let go of Fire (a trap may be in reach already)
+goto 0 6 20 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; cut at 8,20
+until pl_state 0 -
+goto 0 2 20 left 3000
+goto 0 9 13 up 3000
+goto 0 22 13 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; electric at 24,12
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_entry
+goto 1 18 13 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; ice at 20,13
+until pl_state 0 -
+goto 1 27 13 right 3000
+goto 1 20 20 down 3000
+goto 1 15 20 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; poison at 14,21
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_aisles
+goto 1 20 20 right 3000
+goto 1 27 13 up 3000
+goto 2 4 13 right 3000
+goto 2 11 20 down 3000
+goto 2 22 20 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; squash at 24,19
+until pl_state 0 -
+goto 2 11 20 left 3000
+goto 2 4 13 up 3000
+goto 2 18 13 right 3000
+goto 2 25 6 up 3000
+goto 2 10 6 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; catapult at 9,7
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_storage
+goto 1 22 6 left 3000
+goto 4 13 20 up 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; head at 14,16
+until pl_state 0 -
+goto 4 18 20 right 3000
+goto 4 21 17 up 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; impale at 23,14
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_fashion
+goto 4 25 13 up 3000
+goto 5 13 13 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; suck at 15,11
+until pl_state 0 -
+goto 5 17 13 right 3000
+goto 5 24 6 up 3000
+goto 5 25 6 right 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; bite at 27,7
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_offices
+goto 5 24 6 left 3000
+goto 5 17 13 down 3000
+goto 4 11 13 left 3000
+goto 4 4 6 up 3000
+goto 3 20 6 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; drown at 19,5
+until pl_state 0 -
+goto 3 10 6 left 3000
+goto 3 17 13 down 3000
+goto 3 27 13 right 3000
+goto 3 20 20 down 3000
+goto 3 13 20 left 3000
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 fire                      ; fire at 12,21
+until pl_state 0 -
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 mark                      ; sign off mall_food
+goto 3 15 20 right 3000
+goto 0 6 6 down 3000
+goto 0 21 6 right 3000
+goto 0 28 13 down 3000
+goto 0 18 13 left 3000
+goto 0 11 20 down 3000
+goto 0 1 20 left 3000
+run 1
+until pl_state 0 - 2000            ; not on the phone or in a selfie
+run 1 up                        ; out through the door
+until game_state 0 - 3000       ; the owner's speech; Thanos walks in

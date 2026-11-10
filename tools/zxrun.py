@@ -29,6 +29,7 @@ is the end of the boot, not a loop.
 --wav <file> renders what the AY (128K) or the beeper (48K) played to a WAV.
 --video <file.mp4> records the run at 50 frames a second of emulated time, 768x576, with
 the sound when --wav is given too. Needs ffmpeg.
+--seconds N ends the script after N seconds of emulated time (a video of that length).
 --autophone answers Tasha like a player would: about a second after her question, Fire.
 --autododge jumps like a player would: over a worker's tool, and once over Bambis.
 
@@ -110,6 +111,8 @@ class Spectrum:
         self.nephew_jumped = False
         self.goto_x = None      # the x a goto is heading for (same room)
         self.log = []
+        self.stop_t = None      # --seconds
+        self.failures = 0
         self.m.set_output_callback(self.on_out)
         self.m.set_input_callback(self.on_in)
         self.m.set_get_int_vector_callback(lambda: 0xFF)
@@ -259,6 +262,8 @@ class Spectrum:
         loops = 0
         m = self.m
         while loops < n:
+            if self.stop_t is not None and self.t >= self.stop_t:
+                raise TimeUp()
             if m.pc == self.wait_vbl and self.at_wait:
                 m.clear_breakpoint(self.wait_vbl)          # step past the breakpoint
                 m.ticks_to_stop = 1
@@ -388,6 +393,78 @@ def parse_value(v, cpc, syms):
     return cpc.resolve(v, syms)
 
 
+class TimeUp(Exception):
+    """--seconds ran out."""
+
+
+def run_steps(zx, steps, syms, args):
+    """The script, step by step. Failures are counted in zx.failures."""
+    for st in steps:
+        cmd = st[0]
+        if cmd == 'run':
+            keys = st[2].split('+') if len(st) > 2 and st[2] != '-' else []
+            zx.set_keys(keys)
+            zx.run_frames(int(st[1]))
+        elif cmd == 'shot':
+            path = os.path.join(args.out, st[1] + '.png')
+            zx.screenshot(path)
+            print(f"shot {path}")
+        elif cmd in ('until', 'goto'):
+            if cmd == 'until':
+                addrs = [zx.resolve(st[1], syms)]
+                want = [parse_value(st[2], zx, syms)]
+                rest = st[3:]
+                limit = 3000
+            else:
+                addrs = [syms['CUR_ROOM'], syms['PL_X'], syms['PL_Y']]
+                want = [int(v) for v in st[1:4]]
+                rest = st[4:]
+                limit = 1000
+            keys = rest[0].split('+') if rest and rest[0] != '-' else []
+            if len(rest) > 1:
+                limit = int(rest[1])
+            zx.set_keys(keys)
+            zx.goto_x = want[1] if cmd == 'goto' and want[0] == zx.peek(syms['CUR_ROOM']) else None
+            n = 0
+            while [zx.peek(a) for a in addrs] != want and n < limit:
+                zx.run_frames(1)
+                n += 1
+            zx.goto_x = None
+            if [zx.peek(a) for a in addrs] != want:
+                zx.failures += 1
+                print(f"FAIL {' '.join(st)}: got {[zx.peek(a) for a in addrs]} after {n} frames")
+                break               # the rest of a route makes no sense from the wrong place
+        elif cmd == 'psgon':
+            reg = int(st[1])
+            voice = syms['SND_VOICE0' if reg == 8 else 'SND_VOICE1']
+            got = zx.peek(voice + syms['V_VOL']) if 'V_VOL' in syms else zx.peek(voice + 7)
+            ok = got != 0
+            if args.model == '128':
+                ok = ok and (zx.ay[reg] & 15) != 0
+            zx.failures += not ok
+            print(f"{'ok  ' if ok else 'FAIL'} sound {reg} = {got} (expected sound)")
+        elif cmd == 'print':
+            addr = zx.resolve(st[1], syms)
+            count = int(st[2]) if len(st) > 2 else 1
+            print(f"{st[1]}: " + ' '.join(f"{zx.peek(addr + i):02x}" for i in range(count)))
+        elif cmd in ('expect', 'poke', 'pokew'):
+            value = parse_value(st[2], zx, syms)
+            addr = zx.resolve(st[1], syms)
+            if cmd == 'poke':
+                zx.poke(addr, value)
+                continue
+            if cmd == 'pokew':
+                zx.poke(addr, value & 0xFF)
+                zx.poke(addr + 1, value >> 8)
+                continue
+            got = zx.peek(addr)
+            ok = got == value
+            zx.failures += not ok
+            print(f"{'ok  ' if ok else 'FAIL'} {st[1]} = {got} (expected {value})")
+        else:
+            sys.exit(f"unknown script command: {cmd}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('binary')
@@ -398,6 +475,7 @@ def main():
     ap.add_argument('--frames', type=int, default=50, help='frames to run when no script')
     ap.add_argument('--wav', help='render what the AY or the beeper played to this WAV file')
     ap.add_argument('--video', help='record the run to this video file (needs ffmpeg)')
+    ap.add_argument('--seconds', type=float, help='stop after this much emulated time')
     ap.add_argument('--autophone', action='store_true', help="answer Tasha's calls with Fire")
     ap.add_argument('--autododge', action='store_true',
                     help="jump thrown tools, and once over Bambis")
@@ -435,70 +513,13 @@ def main():
         steps = [['run', str(args.frames)], ['shot', 'final']]
 
     failures = 0
-    for st in steps:
-        cmd = st[0]
-        if cmd == 'run':
-            keys = st[2].split('+') if len(st) > 2 and st[2] != '-' else []
-            zx.set_keys(keys)
-            zx.run_frames(int(st[1]))
-        elif cmd == 'shot':
-            path = os.path.join(args.out, st[1] + '.png')
-            zx.screenshot(path)
-            print(f"shot {path}")
-        elif cmd in ('until', 'goto'):
-            if cmd == 'until':
-                addrs = [zx.resolve(st[1], syms)]
-                want = [parse_value(st[2], zx, syms)]
-                rest = st[3:]
-                limit = 3000
-            else:
-                addrs = [syms['CUR_ROOM'], syms['PL_X'], syms['PL_Y']]
-                want = [int(v) for v in st[1:4]]
-                rest = st[4:]
-                limit = 1000
-            keys = rest[0].split('+') if rest and rest[0] != '-' else []
-            if len(rest) > 1:
-                limit = int(rest[1])
-            zx.set_keys(keys)
-            zx.goto_x = want[1] if cmd == 'goto' and want[0] == zx.peek(syms['CUR_ROOM']) else None
-            n = 0
-            while [zx.peek(a) for a in addrs] != want and n < limit:
-                zx.run_frames(1)
-                n += 1
-            zx.goto_x = None
-            if [zx.peek(a) for a in addrs] != want:
-                failures += 1
-                print(f"FAIL {' '.join(st)}: got {[zx.peek(a) for a in addrs]} after {n} frames")
-                break               # the rest of a route makes no sense from the wrong place
-        elif cmd == 'psgon':
-            reg = int(st[1])
-            voice = syms['SND_VOICE0' if reg == 8 else 'SND_VOICE1']
-            got = zx.peek(voice + syms['V_VOL']) if 'V_VOL' in syms else zx.peek(voice + 7)
-            ok = got != 0
-            if args.model == '128':
-                ok = ok and (zx.ay[reg] & 15) != 0
-            failures += not ok
-            print(f"{'ok  ' if ok else 'FAIL'} sound {reg} = {got} (expected sound)")
-        elif cmd == 'print':
-            addr = zx.resolve(st[1], syms)
-            count = int(st[2]) if len(st) > 2 else 1
-            print(f"{st[1]}: " + ' '.join(f"{zx.peek(addr + i):02x}" for i in range(count)))
-        elif cmd in ('expect', 'poke', 'pokew'):
-            value = parse_value(st[2], zx, syms)
-            addr = zx.resolve(st[1], syms)
-            if cmd == 'poke':
-                zx.poke(addr, value)
-                continue
-            if cmd == 'pokew':
-                zx.poke(addr, value & 0xFF)
-                zx.poke(addr + 1, value >> 8)
-                continue
-            got = zx.peek(addr)
-            ok = got == value
-            failures += not ok
-            print(f"{'ok  ' if ok else 'FAIL'} {st[1]} = {got} (expected {value})")
-        else:
-            sys.exit(f"unknown script command: {cmd}")
+    if args.seconds:
+        zx.stop_t = int(args.seconds * zx.frame_t * 50)
+    try:
+        run_steps(zx, steps, syms, args)
+    except TimeUp:
+        pass
+    failures = zx.failures
 
     for line in zx.log:
         print(line)
